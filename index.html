@@ -5,102 +5,55 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pogoda 40-340</title>
 <style>
-body {
-    background: #000000;
-    color: #ffffff;
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
-    text-align: center;
-}
-.box {
-    background: #1a1d29;
-    border-radius: 24px;
-    padding: 30px;
-    margin: 15px auto;
-    max-width: 900px;
-}
-.loc {
-    font-size: 22px;
-    color: #8b92b0;
-}
-.time {
-    font-size: 80px;
-    font-weight: bold;
-    line-height: 1;
-}
-.date {
-    font-size: 26px;
-    color: #8b92b0;
-    margin-top: 10px;
-}
-.weather {
-    width: 100%;
-    max-width: 400px;
-    border-radius: 16px;
-    margin-top: 20px;
-}
-.marquee {
-    background: #1a1d29;
-    border-radius: 16px;
-    padding: 20px 0;
-    margin-top: 20px;
-    overflow: hidden;
-}
-.marquee span {
-    display: inline-block;
-    padding-left: 100%;
-    animation: scroll 15s linear infinite;
-    font-family: monospace;
-    font-size: 24px;
-    font-weight: bold;
-    color: #a0aec0;
-    white-space: nowrap;
-}
-@keyframes scroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-100%); }
-}
+body{background:#000;color:#fff;font-family:Arial,sans-serif;margin:0;padding:20px;text-align:center}
+.b{background:#1a1d29;border-radius:24px;padding:35px;margin:15px auto;max-width:800px}
+.h{font-size:24px;color:#8b92b0;margin-bottom:15px}
+.t{font-size:90px;font-weight:bold;line-height:1;letter-spacing:-2px}
+.d{font-size:28px;color:#8b92b0;margin-top:12px}
+.m{background:#1a1d29;border-radius:16px;padding:20px 0;margin-top:20px;overflow:hidden}
+.m span{display:inline-block;padding-left:100%;animation:s 25s linear infinite;font-family:monospace;font-size:24px;font-weight:bold;color:#a0aec0;white-space:nowrap}
+@keyframes s{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
 </style>
 </head>
 <body>
-<div class="box">
-    <div class="loc">Katowice 40-340</div>
+<div class="b"><div class="h">Katowice 40-340</div></div>
+
+<div class="b">
+<div class="t" id="a">--:--:--</div>
+<div class="d" id="b">--.--.----</div>
 </div>
 
-<div class="box">
-    <div class="time" id="t">--:--:--</div>
-    <div class="date" id="d">--.--.----</div>
-    <img class="weather" id="w" src="https://wttr.in/Katowice_0pq_lang=pl.png" alt="pogoda">
-</div>
-
-<div class="marquee">
-    <span>Milego dnia, uwazaj na siebie</span>
-</div>
+<div class="m"><span id="x">Ladowanie pogody...</span></div>
 
 <script type="text/javascript">
-function z() {
-    var n = new Date();
-    var h = n.getHours();
-    if (h < 10) h = '0' + h;
-    var m = n.getMinutes();
-    if (m < 10) m = '0' + m;
-    var s = n.getSeconds();
-    if (s < 10) s = '0' + s;
-    var d = n.getDate();
-    if (d < 10) d = '0' + d;
-    var mo = n.getMonth() + 1;
-    if (mo < 10) mo = '0' + mo;
-    var y = n.getFullYear();
-    document.getElementById('t').innerHTML = h + ':' + m + ':' + s;
-    document.getElementById('d').innerHTML = d + '.' + mo + '.' + y;
+function f(){
+var n=new Date();
+var h=n.getHours();if(h<10)h='0'+h;
+var m=n.getMinutes();if(m<10)m='0'+m;
+var s=n.getSeconds();if(s<10)s='0'+s;
+var d=n.getDate();if(d<10)d='0'+d;
+var o=n.getMonth()+1;if(o<10)o='0'+o;
+var y=n.getFullYear();
+document.getElementById('a').innerHTML=h+':'+m+':'+s;
+document.getElementById('b').innerHTML=d+'.'+o+'.'+y;
 }
-z();
-setInterval(z, 1000);
+f();setInterval(f,1000);
 
-setInterval(function() {
-    document.getElementById('w').src = 'https://wttr.in/Katowice_0pq_lang=pl.png?' + new Date().getTime();
-}, 1800000);
+function p(){
+var r=new XMLHttpRequest();
+r.open('GET','https://wttr.in/Katowice?format=%l:+%c+%t++%h++Wiatr:%w',true);
+r.onreadystatechange=function(){
+if(r.readyState==4&&r.status==200){
+document.getElementById('x').innerHTML='Milego dnia, uwazaj na siebie | '+r.responseText
+}else if(r.readyState==4){
+document.getElementById('x').innerHTML='Milego dnia, uwazaj na siebie | Pogoda offline'
+}};
+r.onerror=function(){
+document.getElementById('x').innerHTML='Milego dnia, uwazaj na siebie | Pogoda offline'
+};
+r.send();
+}
+p();setInterval(p,1800000);
 </script>
 </body>
 </html>
