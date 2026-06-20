@@ -10,7 +10,7 @@ body{background:#000;color:#fff;font-family:Arial,sans-serif;margin:0;padding:20
 .h{font-size:24px;color:#8b92b0;margin-bottom:20px}
 .t{font-size:90px;font-weight:bold;line-height:1;letter-spacing:-2px;margin:15px 0}
 .d{font-size:28px;color:#8b92b0;margin:15px 0}
-.p{font-size:32px;color:#fff;font-weight:bold;margin:20px 0;min-height:38px}
+.i{width:100%;max-width:500px;border-radius:12px;margin:20px auto;display:block;background:#0f1117}
 .f{font-size:18px;color:#8b92b0;margin-top:30px}
 </style>
 </head>
@@ -18,7 +18,7 @@ body{background:#000;color:#fff;font-family:Arial,sans-serif;margin:0;padding:20
 <div class="b">
 <div class="h">Katowice 40-340</div>
 <div class="d" id="b">--.--.----</div>
-<div class="p" id="p">Ładowanie pogody...</div>
+<img class="i" id="p" src="http://v2.wttr.in/Katowice_0pq_lang=pl_transparency=200.png" alt="pogoda">
 <div class="t" id="a">--:--:--</div>
 <div class="f">Miłego dnia, uważaj na siebie</div>
 </div>
@@ -37,21 +37,9 @@ document.getElementById('b').innerHTML=d+'.'+o+'.'+y;
 }
 f();setInterval(f,1000);
 
-function w(){
-var r=new XMLHttpRequest();
-r.open('GET','http://wttr.in/Katowice?format=%C+%t++Wilg:%h++Wiatr:%w',true);
-r.onreadystatechange=function(){
-if(r.readyState==4&&r.status==200){
-document.getElementById('p').innerHTML=r.responseText
-}else if(r.readyState==4){
-document.getElementById('p').innerHTML='Pogoda offline'
-}};
-r.onerror=function(){
-document.getElementById('p').innerHTML='Pogoda offline'
-};
-r.send();
-}
-w();setInterval(w,1800000);
+setInterval(function(){
+document.getElementById('p').src='http://v2.wttr.in/Katowice_0pq_lang=pl_transparency=200.png?'+new Date().getTime()
+},1800000);
 </script>
 </body>
 </html>
