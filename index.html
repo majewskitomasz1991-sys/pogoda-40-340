@@ -1,249 +1,106 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pogoda 40-340</title>
-    
-    <!-- Pełny ekran na Android/iOS -->
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="theme-color" content="#000000">
-    <link rel="manifest" href="data:application/manifest+json,{'name':'Pogoda 40-340','short_name':'Pogoda','start_url':'.','display':'standalone','background_color':'#000000','theme_color':'#000000'}">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html, body { height: 100%; overflow: hidden; }
-        body { 
-            background: #000000; 
-            color: #ffffff; 
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            min-height: 100vh; 
-            padding: 20px; 
-        }
-    .container { 
-            width: 100%; 
-            max-width: 1200px; 
-            flex: 1; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 24px; 
-        }
-    .header { 
-            background: #1a1d29; 
-            border-radius: 24px; 
-            padding: 16px 32px; 
-            text-align: center; 
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4); 
-        }
-    .location { 
-            font-size: 24px; 
-            font-weight: 600; 
-            color: #8b92b0; 
-            letter-spacing: 1px; 
-        }
-    .main-card { 
-            background: #1a1d29; 
-            border-radius: 32px; 
-            padding: 48px; 
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4); 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 48px; 
-            align-items: center; 
-        }
-    .time-section { text-align: center; }
-    .time { 
-            font-size: 96px; 
-            font-weight: 700; 
-            line-height: 1; 
-            letter-spacing: -2px; 
-        }
-    .date { 
-            font-size: 28px; 
-            color: #8b92b0; 
-            margin-top: 12px; 
-            font-weight: 500; 
-        }
-    .weather-section { 
-            text-align: center; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            gap: 16px; 
-        }
-    .weather-icon { 
-            font-size: 120px; 
-            line-height: 1; 
-        }
-    .temperature { 
-            font-size: 120px; 
-            font-weight: 700; 
-            line-height: 1; 
-            letter-spacing: -4px; 
-        }
-    .condition { 
-            font-size: 24px; 
-            color: #8b92b0; 
-            font-weight: 500; 
-        }
-    .loading { opacity: 0.5; }
-    .error { color: #ff6b6b; font-size: 18px; }
-    .marquee-container { 
-            width: 100%; 
-            overflow: hidden; 
-            background: #1a1d29; 
-            border-radius: 16px; 
-            padding: 20px 0; 
-            margin-top: auto; 
-        }
-    .marquee-text { 
-            font-family: 'Orbitron', monospace; 
-            font-size: 26px; 
-            font-weight: 700; 
-            color: #a0aec0; 
-            white-space: nowrap; 
-            display: inline-block; 
-            padding-left: 100%; 
-            animation: scroll-left 15s linear infinite; 
-            letter-spacing: 2px; 
-        }
-        @keyframes scroll-left { 
-            0% { transform: translateX(0); } 
-            100% { transform: translateX(-100%); } 
-        }
-        @media (max-width: 900px) {
-        .main-card { grid-template-columns: 1fr; padding: 32px; gap: 24px; }
-        .time { font-size: 72px; }
-        .temperature { font-size: 96px; }
-        .weather-icon { font-size: 96px; }
-        .date { font-size: 22px; }
-        }
-        @media (max-width: 600px) {
-        .time { font-size: 56px; }
-        .temperature { font-size: 72px; }
-        .weather-icon { font-size: 72px; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pogoda 40-340</title>
+<style>
+body {
+    background: #000000;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+}
+.box {
+    background: #1a1d29;
+    border-radius: 24px;
+    padding: 30px;
+    margin: 15px auto;
+    max-width: 900px;
+}
+.loc {
+    font-size: 22px;
+    color: #8b92b0;
+}
+.time {
+    font-size: 80px;
+    font-weight: bold;
+    line-height: 1;
+}
+.date {
+    font-size: 26px;
+    color: #8b92b0;
+    margin-top: 10px;
+}
+.weather {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 16px;
+    margin-top: 20px;
+}
+.marquee {
+    background: #1a1d29;
+    border-radius: 16px;
+    padding: 20px 0;
+    margin-top: 20px;
+    overflow: hidden;
+}
+.marquee span {
+    display: inline-block;
+    padding-left: 100%;
+    animation: scroll 15s linear infinite;
+    font-family: monospace;
+    font-size: 24px;
+    font-weight: bold;
+    color: #a0aec0;
+    white-space: nowrap;
+}
+@keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+}
+</style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="location">Katowice 40-340</div>
-        </div>
+<div class="box">
+    <div class="loc">Katowice 40-340</div>
+</div>
 
-        <div class="main-card">
-            <div class="time-section">
-                <div class="time" id="time">--:--:--</div>
-                <div class="date" id="date">--.--.----</div>
-            </div>
+<div class="box">
+    <div class="time" id="t">--:--:--</div>
+    <div class="date" id="d">--.--.----</div>
+    <img class="weather" id="w" src="https://wttr.in/Katowice_0pq_lang=pl.png" alt="pogoda">
+</div>
 
-            <div class="weather-section">
-                <div class="weather-icon" id="weatherIcon">⏳</div>
-                <div class="temperature loading" id="temperature">--°</div>
-                <div class="condition" id="condition">Ładowanie...</div>
-            </div>
-        </div>
+<div class="marquee">
+    <span>Milego dnia, uwazaj na siebie</span>
+</div>
 
-        <div class="marquee-container">
-            <div class="marquee-text">Milego dnia, uwazaj na siebie :-)</div>
-        </div>
-    </div>
+<script type="text/javascript">
+function z() {
+    var n = new Date();
+    var h = n.getHours();
+    if (h < 10) h = '0' + h;
+    var m = n.getMinutes();
+    if (m < 10) m = '0' + m;
+    var s = n.getSeconds();
+    if (s < 10) s = '0' + s;
+    var d = n.getDate();
+    if (d < 10) d = '0' + d;
+    var mo = n.getMonth() + 1;
+    if (mo < 10) mo = '0' + mo;
+    var y = n.getFullYear();
+    document.getElementById('t').innerHTML = h + ':' + m + ':' + s;
+    document.getElementById('d').innerHTML = d + '.' + mo + '.' + y;
+}
+z();
+setInterval(z, 1000);
 
-    <script>
-        var LAT = 50.2649;
-        var LON = 19.0238;
-        var API_URL = 'https://api.open-meteo.com/v1/forecast?latitude=' + LAT + '&longitude=' + LON + '&current=temperature_2m,weather_code&timezone=Europe%2FWarsaw';
-
-        var weatherIcons = {
-            0:'☀️', 1:'🌤️', 2:'⛅', 3:'☁️',
-            45:'🌫️', 48:'🌫️',
-            51:'🌦️', 53:'🌦️', 55:'🌦️',
-            61:'🌧️', 63:'🌧️', 65:'🌧️',
-            71:'🌨️', 73:'🌨️', 75:'🌨️',
-            80:'🌧️', 81:'🌧️', 82:'🌧️',
-            95:'⛈️', 96:'⛈️', 99:'⛈️'
-        };
-
-        var weatherDescriptions = {
-            0:'Bezchmurnie', 1:'Przeważnie bezchmurnie', 2:'Częściowe zachmurzenie', 3:'Pochmurno',
-            45:'Mgła', 48:'Mgła szronowa',
-            51:'Lekka mżawka', 53:'Mżawka', 55:'Intensywna mżawka',
-            61:'Lekki deszcz', 63:'Deszcz', 65:'Ulewny deszcz',
-            71:'Lekki śnieg', 73:'Śnieg', 75:'Intensywny śnieg',
-            80:'Przelotne opady', 81:'Przelotne opady', 82:'Gwałtowne opady',
-            95:'Burza', 96:'Burza z gradem', 99:'Burza z gradem'
-        };
-
-        function updateClock() {
-            var now = new Date();
-            var h = ('0' + now.getHours()).slice(-2);
-            var m = ('0' + now.getMinutes()).slice(-2);
-            var s = ('0' + now.getSeconds()).slice(-2);
-            var d = ('0' + now.getDate()).slice(-2);
-            var mo = ('0' + (now.getMonth() + 1)).slice(-2);
-            var y = now.getFullYear();
-            document.getElementById('time').textContent = h + ':' + m + ':' + s;
-            document.getElementById('date').textContent = d + '.' + mo + '.' + y;
-        }
-
-        function fetchWeather() {
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', API_URL, true);
-            xhr.timeout = 10000;
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
-                        try {
-                            var data = JSON.parse(xhr.responseText);
-                            var temp = Math.round(data.current.temperature_2m);
-                            var code = data.current.weather_code;
-                            
-                            document.getElementById('temperature').textContent = temp + '°';
-                            document.getElementById('temperature').className = 'temperature';
-                            document.getElementById('weatherIcon').textContent = weatherIcons[code] || '🌡️';
-                            document.getElementById('condition').textContent = weatherDescriptions[code] || 'Nieznana pogoda';
-                            document.getElementById('condition').className = 'condition';
-                        } catch (e) {
-                            document.getElementById('condition').textContent = 'Błąd danych';
-                            document.getElementById('condition').className = 'condition error';
-                            document.getElementById('weatherIcon').textContent = '⚠️';
-                        }
-                    } else {
-                        document.getElementById('condition').textContent = 'Błąd API: ' + xhr.status;
-                        document.getElementById('condition').className = 'condition error';
-                        document.getElementById('weatherIcon').textContent = '⚠️';
-                    }
-                }
-            };
-            xhr.onerror = function() {
-                document.getElementById('condition').textContent = 'Brak internetu';
-                document.getElementById('condition').className = 'condition error';
-                document.getElementById('weatherIcon').textContent = '📡';
-            };
-            xhr.ontimeout = function() {
-                document.getElementById('condition').textContent = 'Timeout';
-                document.getElementById('condition').className = 'condition error';
-                document.getElementById('weatherIcon').textContent = '⏱️';
-            };
-            xhr.send();
-        }
-
-        updateClock();
-        fetchWeather();
-        setInterval(updateClock, 1000);
-        setInterval(fetchWeather, 1800000);
-        
-        // Zapobiega wygaszaniu ekranu na Androidzie
-        if ('wakeLock' in navigator) {
-            navigator.wakeLock.request('screen').catch(function(){});
-        }
-    </script>
+setInterval(function() {
+    document.getElementById('w').src = 'https://wttr.in/Katowice_0pq_lang=pl.png?' + new Date().getTime();
+}, 1800000);
+</script>
 </body>
 </html>
