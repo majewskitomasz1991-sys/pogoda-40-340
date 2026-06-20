@@ -6,24 +6,22 @@
 <title>Pogoda 40-340</title>
 <style>
 body{background:#000;color:#fff;font-family:Arial,sans-serif;margin:0;padding:20px;text-align:center}
-.b{background:#1a1d29;border-radius:24px;padding:35px;margin:15px auto;max-width:800px}
-.h{font-size:24px;color:#8b92b0;margin-bottom:15px}
-.t{font-size:90px;font-weight:bold;line-height:1;letter-spacing:-2px}
-.d{font-size:28px;color:#8b92b0;margin-top:12px}
-.m{background:#1a1d29;border-radius:16px;padding:20px 0;margin-top:20px;overflow:hidden}
-.m span{display:inline-block;padding-left:100%;animation:s 25s linear infinite;font-family:monospace;font-size:24px;font-weight:bold;color:#a0aec0;white-space:nowrap}
-@keyframes s{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
+.b{background:#1a1d29;border-radius:24px;padding:40px;margin:15px auto;max-width:800px}
+.h{font-size:24px;color:#8b92b0;margin-bottom:20px}
+.t{font-size:90px;font-weight:bold;line-height:1;letter-spacing:-2px;margin:15px 0}
+.d{font-size:28px;color:#8b92b0;margin:15px 0}
+.p{font-size:32px;color:#fff;font-weight:bold;margin:20px 0;min-height:38px}
+.f{font-size:18px;color:#8b92b0;margin-top:30px}
 </style>
 </head>
 <body>
-<div class="b"><div class="h">Katowice 40-340</div></div>
-
 <div class="b">
-<div class="t" id="a">--:--:--</div>
+<div class="h">Katowice 40-340</div>
 <div class="d" id="b">--.--.----</div>
+<div class="p" id="p">Ładowanie pogody...</div>
+<div class="t" id="a">--:--:--</div>
+<div class="f">Miłego dnia, uważaj na siebie</div>
 </div>
-
-<div class="m"><span id="x">Ladowanie pogody...</span></div>
 
 <script type="text/javascript">
 function f(){
@@ -39,21 +37,21 @@ document.getElementById('b').innerHTML=d+'.'+o+'.'+y;
 }
 f();setInterval(f,1000);
 
-function p(){
+function w(){
 var r=new XMLHttpRequest();
-r.open('GET','https://wttr.in/Katowice?format=%l:+%c+%t++%h++Wiatr:%w',true);
+r.open('GET','http://wttr.in/Katowice?format=%C+%t++Wilg:%h++Wiatr:%w',true);
 r.onreadystatechange=function(){
 if(r.readyState==4&&r.status==200){
-document.getElementById('x').innerHTML='Milego dnia, uwazaj na siebie | '+r.responseText
+document.getElementById('p').innerHTML=r.responseText
 }else if(r.readyState==4){
-document.getElementById('x').innerHTML='Milego dnia, uwazaj na siebie | Pogoda offline'
+document.getElementById('p').innerHTML='Pogoda offline'
 }};
 r.onerror=function(){
-document.getElementById('x').innerHTML='Milego dnia, uwazaj na siebie | Pogoda offline'
+document.getElementById('p').innerHTML='Pogoda offline'
 };
 r.send();
 }
-p();setInterval(p,1800000);
+w();setInterval(w,1800000);
 </script>
 </body>
 </html>
