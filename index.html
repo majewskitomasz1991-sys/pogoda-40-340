@@ -1,1 +1,188 @@
-<html><head><meta charset="utf-8" /><meta name="referrer" content="origin" /></head><body><script type="text/javascript" nonce="bQa2HLzm">document.location.replace("https:\/\/cdn.fbsbx.com\/v\/t65.102178-21\/726924872_1499115218575469_5432230485767318622_n.jpg\/pogoda-tablet-40-340_web_artifact_1_2f685e5fa464.html?_nc_ht=cdn.fbsbx.com&_nc_ohc=qHbypWrLCjQQ7kNvwHJ3jy9&sdl=0&ccb=14-4&oh=00_Af9EZ7Y84xfdoVXH4Z7JvWcSra_AggiVffde1p_dPUr-fw&oe=6A37F69A&_nc_sid=4ee932");</script></body></html>
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pogoda 40-340</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #000000;
+            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .header {
+            background: #1a1d29;
+            border-radius: 24px;
+            padding: 16px 32px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .location {
+            font-size: 24px;
+            font-weight: 600;
+            color: #8b92b0;
+            letter-spacing: 1px;
+        }
+
+        .main-card {
+            background: #1a1d29;
+            border-radius: 32px;
+            padding: 48px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .time-section {
+            text-align: center;
+        }
+
+        .time {
+            font-size: 96px;
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: -2px;
+        }
+
+        .date {
+            font-size: 28px;
+            color: #8b92b0;
+            margin-top: 12px;
+            font-weight: 500;
+        }
+
+        .weather-section {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .weather-icon {
+            font-size: 120px;
+            line-height: 1;
+        }
+
+        .temperature {
+            font-size: 120px;
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: -4px;
+        }
+
+        .condition {
+            font-size: 24px;
+            color: #8b92b0;
+            font-weight: 500;
+        }
+
+        .loading {
+            opacity: 0.5;
+        }
+
+        .error {
+            color: #ff6b6b;
+            font-size: 18px;
+        }
+
+        .marquee-container {
+            width: 100%;
+            overflow: hidden;
+            background: #1a1d29;
+            border-radius: 16px;
+            padding: 20px 0;
+            margin-top: auto;
+        }
+
+        .marquee-text {
+            font-family: 'Orbitron', monospace;
+            font-size: 26px;
+            font-weight: 700;
+            color: #a0aec0;
+            white-space: nowrap;
+            display: inline-block;
+            padding-left: 100%;
+            animation: scroll-left 15s linear infinite;
+            letter-spacing: 2px;
+        }
+
+        @keyframes scroll-left {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .main-card {
+                grid-template-columns: 1fr;
+                padding: 32px;
+            }
+            .time { font-size: 72px; }
+            .temperature { font-size: 96px; }
+            .weather-icon { font-size: 96px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="location">Katowice 40-340</div>
+        </div>
+
+        <div class="main-card">
+            <div class="time-section">
+                <div class="time" id="time">--:--:--</div>
+                <div class="date" id="date">--.--.----</div>
+            </div>
+
+            <div class="weather-section">
+                <div class="weather-icon" id="weatherIcon">⏳</div>
+                <div class="temperature loading" id="temperature">--°</div>
+                <div class="condition" id="condition">Ładowanie...</div>
+            </div>
+        </div>
+
+        <div class="marquee-container">
+            <div class="marquee-text">Milego dnia, uwazaj na siebie</div>
+        </div>
+    </div>
+
+    <script>
+        const LAT = 50.2649;
+        const LON = 19.0238;
+        const API_URL = `https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&current=temperature_2m,weather_code&timezone=Europe%2FWarsaw`;
+
+        const weatherIcons = {
+            0: '☀️', 1: '🌤️', 2: '⛅', 3: '☁️',
+            45: '🌫️', 
